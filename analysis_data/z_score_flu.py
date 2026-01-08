@@ -19,7 +19,7 @@ import os
 import sys
 import pandas as pd
 
-ADM_PATH = os.path.join("analysis_data", "target-hospital-admissions.csv")
+ADM_PATH = os.path.join("analysis_data", "formatted_flu.csv")
 OUT_PATH = os.path.join("analysis_data", "hosps_pop_zscore.csv")
 
 

@@ -44,3 +44,6 @@ This approach prioritizes data integrity and aligns with standard epidemiologica
 Z-score normalization centers each state's hospitalization time series at zero
 and scales by its historical standard deviation, enabling comparison of
 relative flu intensity across states with very different population sizes.
+
+# PCA
+We constructed a flu matrix with season weeks as rows and state-season pairs as columns, then applied PCA via SVD to both population-normalized and z-score–normalized datasets. We stored the resulting U, Σ, and V matrices in long-form CSVs for full reproducibility

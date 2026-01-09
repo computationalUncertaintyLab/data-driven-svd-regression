@@ -1,0 +1,8 @@
+# Jupyter notebook auto-save files
+.ipynb_checkpoints/
+.virtual_documents/
+
+
+# Python cache
+__pycache__/
+*.pyc

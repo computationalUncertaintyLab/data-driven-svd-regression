@@ -48,7 +48,7 @@ locations <- read.csv(file = "https://raw.githubusercontent.com/cdcepi/FluSight-
   
 target_data <- fetch_flu()
 
-write.csv(target_data, file = "./data/target-hospital-admissions.csv", row.names = FALSE)
+write.csv(target_data, file = "./data/target-hospital-admissions_raw.csv", row.names = FALSE)
 
 
 

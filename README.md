@@ -6,6 +6,11 @@ Dependencies:
 Install with:
 pip install epiweeks
 
+# Columns
+Value = totalconfflunewadm
+This stores -Total Influenza Admissions(Total number of new hospital admissions of patients with confirmed influenza captured during the reporting week (Sunday - Saturday)
+
+
 # Data Cleaning and Missing Values
 
 The influenza hospitalization dataset

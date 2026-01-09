@@ -1,15 +1,15 @@
 """
 z_score_flu.py
 
-This script converts flu hospitalization numbers into z-scores, which tell us how unusual
+We convert flu hospitalization numbers into z-scores, which tell us how unusual
 the current flu activity is compared to what's typical for each state.
 
-Definition:
-    zflu = (hospitalizations - state_mean) / state_std
+The math:
+zflu = (hospitalizations - state_mean) / state_std
 
 Input file needed:
 - analysis_data/target-hospital-admissions.csv
-- data/from_state_to_fip_and_pop.csv (for population merge consistency)
+- data/from_state_to_fip_and_pop.csv
 
 Output file created:
 - analysis_data/hosps_pop_zscore.csv
@@ -54,6 +54,7 @@ def main():
     #Avoiding division by zero
     df = df[df["state_std"] > 0].copy()
 
+    #z-Score
     df["zflu"] = (df["value"] - df["state_mean"]) / df["state_std"]
 
     df.to_csv(OUT_PATH, index=False)

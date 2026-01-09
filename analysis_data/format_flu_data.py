@@ -1,11 +1,9 @@
 """
 format_flu_data.py
-
-Goal:
 - Add MMWR epiweek variables + flu season variables to weekly flu admissions data.
 - Merge state population from locations file.
 
-Generate:
+This will Generate:
 - analysis_data/formatted_flu.csv
 
 Season definition:

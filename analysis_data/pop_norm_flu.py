@@ -1,11 +1,11 @@
 """
 pop_norm_flu.py
 
-This script takes flu hospitalization numbers and adjusts them by population size so we can
-fairly compare different states. Without this adjustment, big states like California would
-always look worse than small states like Vermont just because they have more people.
+We take flu hospitalization numbers and adjusts them by population size so we can
+fairly compare different states. Without this adjustment, big states like CA would
+always look worse than small states like Vermont just because of population difference.
 
-Result:
+This will Generate:
 A CSV file with a new column called "hosps_pop_norm" that shows hospitalizations per 100,000
 people. This makes it easy to compare flu severity across any state or region.
 

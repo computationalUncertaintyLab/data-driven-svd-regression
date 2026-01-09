@@ -1,15 +1,15 @@
 """
 svd_flu_data.py
 
-Build a flu matrix X where:
+flu matrix:
 - rows = season_week (0..32)
 - columns = one state within one season (i.e., (season, location) pairs)
 - values = normalized flu hospitalizations
 
-Run PCA (SVD of centered X) using scikit-learn to obtain:
-- U  (left singular vectors; length = 33 weeks)
-- SIGMA (singular values; importance of each component)
-- V (right singular vectors / weights per column)
+By applying SVD/PCA, we decompose the messy raw data into three meaningful parts:
+-U (Seasonal Shapes): The core "archetypes" of a flu season (e.g., a sharp peak vs. a slow burn). Each vector is 33 weeks long.
+-SIGMA (Importance): A ranking of which seasonal shapes are the most common across the entire dataset.
+-V (Regional Weights): Tells us which states or seasons align most closely with the shapes found in U
 
 Inputs:
 - analysis_data/hosps_pop_norm.csv
@@ -18,7 +18,7 @@ Inputs:
 Outputs:
 - analysis_data/SVD_flu_pop.csv
 - analysis_data/SVD_flu_zscore.csv
-- analysis_data/SVD_flu_pop_columns.csv  (column_id -> season/location)
+- analysis_data/SVD_flu_pop_columns.csv
 - analysis_data/SVD_flu_zscore_columns.csv
 """
 
@@ -124,7 +124,7 @@ def pca_svd_to_long(X: pd.DataFrame, n_components: int | None = None) -> pd.Data
     - V rows: vector_name='v', vector_number1=column_id, season_week=component, value=V[column_id, comp]
       (Here 'season_week' stores the component index for V rows, because V is over columns, not weeks.)
     """
-    # Convert to numpy, center by row (week)?? No: center by feature (columns) across weeks.
+    
     X_np = X.to_numpy(dtype=float)
     col_means = np.nanmean(X_np, axis=0)
     X_centered = X_np - col_means
@@ -138,16 +138,16 @@ def pca_svd_to_long(X: pd.DataFrame, n_components: int | None = None) -> pd.Data
     V = Vt.T                                       # shape (n_cols, k)
     U = scores / sigma                             # shape (n_weeks, k)
 
-    # --- U long ---
+    #U long
     u_rows = []
     for comp in range(k):
         for w in range(U.shape[0]):
             u_rows.append(("u", comp, w, float(U[w, comp])))
 
-    # --- sigma long ---
+    #sigma long
     s_rows = [("sigma", comp, -1, float(sigma[comp])) for comp in range(k)]
 
-    # --- V long ---
+    #V long
     v_rows = []
     n_cols = V.shape[0]
     for col_idx in range(n_cols):

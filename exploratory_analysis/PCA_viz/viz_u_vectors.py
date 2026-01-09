@@ -1,9 +1,8 @@
 """
 viz_u_vectors.py
 
-Goal:
-- Visualize the first several principal component time-series vectors (U vectors)
-  from the saved SVD/PCA outputs.
+Visualize the first several principal component time-series vectors (U vectors)
+from the saved SVD/PCA outputs.
 
 Inputs:
 - analysis_data/SVD_flu_pop.csv
@@ -49,7 +48,6 @@ def load_u_vectors(path: str, n_components: int = 3) -> pd.DataFrame:
     u = u[u["vector_number1"].between(0, n_components - 1)]
     u = u[u["season_week"].between(0, 32)].copy()
 
-    # Make sure types are clean
     u["vector_number1"] = u["vector_number1"].astype(int)
     u["season_week"] = u["season_week"].astype(int)
 
@@ -59,7 +57,7 @@ def load_u_vectors(path: str, n_components: int = 3) -> pd.DataFrame:
 def plot_u_pdf(u: pd.DataFrame, out_pdf: str, title_prefix: str) -> None:
     os.makedirs(os.path.dirname(out_pdf), exist_ok=True)
 
-    # ---- Page 1: All U vectors on one plot ----
+    # All U vectors on one plot
     with PdfPages(out_pdf) as pdf:
         plt.figure(figsize=(10, 5))
         for k in sorted(u["vector_number1"].unique()):
@@ -75,7 +73,7 @@ def plot_u_pdf(u: pd.DataFrame, out_pdf: str, title_prefix: str) -> None:
         pdf.savefig()
         plt.close()
 
-        # ---- Pages 2..: One component per page (cleaner view) ----
+        #One component per page
         for k in sorted(u["vector_number1"].unique()):
             uk = u[u["vector_number1"] == k].sort_values("season_week")
 
@@ -97,13 +95,13 @@ def main():
     u_z = load_u_vectors(Z_IN, n_components=3)
     plot_u_pdf(u_z, Z_OUT, "Z-score normalized PCA")
 
-    print(f"✅ Wrote {POP_OUT}")
-    print(f"✅ Wrote {Z_OUT}")
+    print(f"Wrote {POP_OUT}")
+    print(f"Wrote {Z_OUT}")
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"❌ ERROR: {e}", file=sys.stderr)
+        print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(1)
